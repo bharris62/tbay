@@ -1,16 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
+from sqlalchemy.orm import relationship
 
 engine = create_engine('postgresql://BHarris:@localhost:5432/tbay')
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
-
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
-from sqlalchemy.orm import relationship
 
 
 class Item(Base):
@@ -20,7 +18,6 @@ class Item(Base):
     name = Column(String, nullable=False)
     description = Column(String)
     start_time = Column(DateTime, default=datetime.utcnow)
-
 
 
 class User(Base):
@@ -44,7 +41,6 @@ class Bid(Base):
     user = relationship('User', backref='bids')
 
 
-
 Base.metadata.create_all(engine)
 
 if __name__ == '__main__':
@@ -60,7 +56,7 @@ if __name__ == '__main__':
 
     bids = [
          Bid(price=500.0, user=christina, item=microphone),
-         Bid(price=150.0, user=beyonce, item=microphone),
+         Bid(price=1150.0, user=beyonce, item=microphone),
          Bid(price=200.0, user=christina, item=microphone),
          Bid(price=201.0, user=beyonce, item=microphone),
     ]
